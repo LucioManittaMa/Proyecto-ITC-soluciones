@@ -9,9 +9,7 @@ import argparse
 
 # --- CONFIGURACIÓN (Actualizada con tus datos) ---
 # ¡¡IMPORTANTE!! Asegúrate de que este nombre coincida con tu archivo
-# --- CONFIGURACIÓN (Actualizada con tus datos) ---
-# ¡¡IMPORTANTE!! Asegúrate de que este nombre coincida con tu archivo
-ARCHIVO_EXCEL = "Lista_Emails_Final2.xlsx"
+ARCHIVO_EXCEL = "Lista.xlsx"
 API_URL = "API/URL"
 EMAIL_REMITENTE = "noreply@empresa.com" 
 PAUSA_SEGUNDOS = 0.2
@@ -38,14 +36,14 @@ EMAIL_PERSONAL = "persona@empresa.com"
 # (Formateadas como f-strings para insertar los emails de soporte/personal)
 # (Usamos {{nombre_contacto}} como placeholder para el .format() de adentro del bucle)
 
-HTML_FARMACIA = f"""
-<p>Buenos días, prestador: {{nombre_contacto}}</p>
+HTML_1 = f"""
+<p>Buenos días,: {{nombre_contacto}}</p>
 
-<p>Estamos verificando que aún se encuentra utilizando el validador anterior SIFOS / Sitel para las validaciones de Farmacia.</p>
+<p>Estamos verificando que aún se encuentra utilizando el validador anterior para las validaciones.</p>
 
 <p>Queremos corroborar si esto continúa siendo así, ya que dichas herramientas dejarán de estar operativas próximamente.</p>
 
-<p>Recomendamos actualizarse cuanto antes a la nueva plataforma NUVALID (Farmacia), disponible en el siguiente enlace:<br>
+<p>Recomendamos actualizarse cuanto antes a la nueva plataforma, disponible en el siguiente enlace:<br>
 👉 link</p>
 
 <p>Sugerimos efectuar este cambio lo antes posible para evitar interrupciones en la operatoria.</p>
@@ -57,14 +55,14 @@ HTML_FARMACIA = f"""
 <p>Saludos,<br>firma</p>
 """
 
-HTML_MEDICINA = f"""
-<p>Buenos días, prestador: {{nombre_contacto}}</p>
+HTML_2 = f"""
+<p>Buenos días,: {{nombre_contacto}}</p>
 
-<p>Estamos verificando que aún se encuentra utilizando el validador anterior PC POS / Sitel para las validaciones de Medicina.</p>
+<p>Estamos verificando que aún se encuentra utilizando el validador anterior para las validaciones.</p>
 
 <p>Queremos corroborar si esto continúa siendo así, ya que dichas herramientas dejarán de estar operativas próximamente.</p>
 
-<p>Recomendamos actualizarse cuanto antes a la nueva plataforma NUVALID (Medicina), disponible en el siguiente enlace:<br>
+<p>Recomendamos actualizarse cuanto antes a la nueva plataforma, disponible en el siguiente enlace:<br>
 👉 link</p>
 
 <p>Sugerimos efectuar este cambio lo antes posible para evitar interrupciones en la operatoria.</p>
@@ -76,8 +74,8 @@ HTML_MEDICINA = f"""
 <p>Saludos,<br>firma</p>
 """
 
-ASUNTO_FARMACIA = "NO RESPONDER A ESTE CORREO Aviso importante – Actualización a NUVALID Farmacia"
-ASUNTO_MEDICINA = "NO RESPONDER A ESTE CORREO Aviso importante – Actualización a NUVALID Medicina" # (Dejé el asunto de Medicina por si acaso)
+ASUNTO_1 = "NO RESPONDER A ESTE CORREO Aviso importante – Actualización Sistema 1"
+ASUNTO_2 = "NO RESPONDER A ESTE CORREO Aviso importante – Actualización Sistema 2"
 
 # --- FUNCIÓN PRINCIPAL (Ajustada a tu Excel) ---
 def enviar_correos(send: bool = False):
@@ -116,12 +114,12 @@ def enviar_correos(send: bool = False):
             tipo_usuario_norm = str(fila.get('Tipo usuario', '')).strip().upper()
 
             # 2. Lógica If/Else para definir el contenido
-            if tipo_usuario_norm == 'FARMACIA':
-                asunto = ASUNTO_FARMACIA
-                html_body = HTML_FARMACIA.format(nombre_contacto=nombre_contacto)
+            if tipo_usuario_norm == '1':
+                asunto = ASUNTO_1
+                html_body = HTML_1.format(nombre_contacto=nombre_contacto)
             else:
-                asunto = ASUNTO_MEDICINA
-                html_body = HTML_MEDICINA.format(nombre_contacto=nombre_contacto)
+                asunto = ASUNTO_2
+                html_body = HTML_2.format(nombre_contacto=nombre_contacto)
             
             # 3. Codificar HTML a Base64 [cite: DOCUMENTACION_API_EMAIL.md]
             html_bytes = html_body.encode('utf-8')
