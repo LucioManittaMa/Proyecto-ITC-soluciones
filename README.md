@@ -54,8 +54,6 @@ python enviadorMails.py --send --file lista_contactos.xlsx
 .
 ├── enviadorMails.py                 # Script principal
 ├── README.md                        # Documentación general
-└── docs/
-    └── DOCUMENTACION_API_EMAIL.md   # Documentación de la API (si aplica)
 ```
 
 ## Configuración
@@ -170,5 +168,6 @@ Para mantener el código:
 4. Mantener las plantillas HTML actualizadas#
 
 Proyecto-ITC-soluciones
+
 
 
